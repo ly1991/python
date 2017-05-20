@@ -1,0 +1,35 @@
+# -*- coding:utf-8 -*-
+import requests,urllib,time,os
+from bs4 import BeautifulSoup
+
+def downImgs(url,pages,path):
+    for page in range(pages):
+        #拼接url
+        downUrl = url + str(page)
+        #发起请求
+        r = requests.get(downUrl)
+        #解析并且格式化页面
+        soup = BeautifulSoup(r.content, "html.parser")
+        #获取页面图片
+        imgs = soup.find_all('img',attrs={'class':'BDE_Image'})
+
+        now = time.strftime('%Y_%m_%d-%H:%M:%S',time.localtime(time.time()))
+        savePath = path+'\\'+now+'\\'
+        if not os.path.exists(savePath):
+            print(123)
+            os.makedirs(savePath)
+
+        print(savePath)
+
+
+        # for img in imgs:
+        #     src = img['src']
+        #     urllib.request.urlretrieve(src, 'D:\E\%s' % src[src.rfind('/'):])
+        # print('done……')
+
+
+
+url = 'https://tieba.baidu.com/p/1578164976?see_lz=1&pn='
+downImgs(url,1,'D:\E')
+
+112.124.6.214
